@@ -1,116 +1,115 @@
-import * as React from 'react';
-import {Card, TextInput, Button, Text} from 'react-native-paper';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {View,StyleSheet} from "react-native";
+import React, { useState } from 'react';
+import {View, StyleSheet, Image} from 'react-native';
+import { TextInput, Button, Title, Snackbar } from 'react-native-paper';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-const LoginScreen = ({ navigation }) =>{
-    return(
-        <View className="flex-1 bg-white" style={styles.container}>
+const LoginScreen = ({navigation}) => {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [snackbarVisible, setSnackbarVisible] = useState(false);
 
-            <Card style={styles.card} >
-                {/* Your JSX Elements */}
-                <Card.Content>
-                    <Text>LOGIN</Text>
-                    <TextInput
-                        style={styles.input}
-                        dense={true}
-                        inputMode={"email"}
-                        mode={"outlined"}
-                        label="Email"
-                        placeholder={'Email address'}/>
+    const handleLogin = () => {
+        // Your login logic goes here
+        // For demonstration purposes, let's just show a snackbar
+        setSnackbarVisible(true);
+        navigation.navigate('MainContainer');
+    };
 
-                    <TextInput
-                        style={styles.input}
-                        dense={true}
-                        inputMode={"text"}
-                        mode={"outlined"}
-                        label="Password"
-                        placeholder={'Password'}
-                    />
+    const handleRegister = () => {
+        // Your login logic goes here
+        // For demonstration purposes, let's just show a snackbar
+        setSnackbarVisible(true);
+        navigation.navigate('Register');
+    };
 
-                    <Text>forgot password?</Text>
-                </Card.Content>
+    return (
+        <View style={styles.container}>
 
-                <Card.Actions>
-                    <Button
-                        style={styles.horizontalButtons}
-                        uppercase={true}
-                        mode={"contained"}
-                        title={'register'}>REGISTER</Button>
+            {/*<Image
+                source={require('../assets/logo.png')} // Replace with the path to your logo
+                style={styles.logo}
+            />*/}
 
-                    <Button style={styles.horizontalButtons}
-                            uppercase={true} mode={"contained"}
-                            title={'login'}
-                            onPress={()=>{navigation.navigate('Register')}}>LOGIN</Button>
-                </Card.Actions>
-            </Card>
+            <Title style={styles.title}>Login</Title>
 
-            <View style={styles.footer}>
-                <Text>version 1.0.0</Text>
-            </View>
+            <TextInput
+                label="Email"
+                value={email}
+                onChangeText={(text) => setEmail(text)}
+                mode="outlined"
+                style={styles.input}
+            />
+
+            <TextInput
+                label="Password"
+                value={password}
+                onChangeText={(text) => setPassword(text)}
+                secureTextEntry
+                mode="outlined"
+                style={styles.input}
+            />
+
+            <Button
+                mode="contained"
+                onPress={handleLogin}
+                style={styles.loginButton}>
+                LOGIN
+            </Button>
+
+            <Button
+                mode="contained"
+                onPress={handleRegister}
+                style={styles.loginButton}>
+                REGISTER
+            </Button>
+
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={() => setSnackbarVisible(false)}
+                duration={3000}
+                action={{
+                    label: 'OK',
+                    onPress: () => setSnackbarVisible(false),
+                }}
+            >
+                Login successful! (Replace with your logic)
+            </Snackbar>
+
+            <Snackbar
+                visible={snackbarVisible}
+                onDismiss={() => setSnackbarVisible(false)}
+                duration={3000}
+                action={{
+                    label: 'OK',
+                    onPress: () => setSnackbarVisible(false),
+                }}>
+                Register successful! (Replace with your logic)
+            </Snackbar>
         </View>
     );
-}
-
-export default LoginScreen;
+};
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'lightgray',
-        alignItems: 'center',
         justifyContent: 'center',
+        paddingHorizontal: 16,
     },
 
-    card: {
-        shadowColor: '#808080',
-        alignContent: "center",
-        backgroundColor: '#fff',
-        shadow: true,
-        elevation:8,
-        width: wp('80%'),
-        height: hp('35%'),
+    title: {
+        fontSize: 24,
+        marginBottom: 16,
+        textAlign: 'left',
+        textTransform:"capitalize",
+        fontWeight: "bold",
     },
-
-    title:{
-        fontStyle: "bold",
-        fontFamily:'bungee',
-        fontWeight: hp('2%'),
-        marginTop:10,
-        marginBottom:10,
+    input: {
+        marginBottom: 16,
     },
-
-    input:{
-        width:wp('73%'),
-        height:40,
-        marginTop:10,
-        marginBottom:10,
-        backgroundColor: 'white',
-    },
-
-    buttons:{
-        borderRadius:2,
-    },
-
-    horizontalButtons:{
-        flex:1,
-        borderRadius: 2,
-        width: wp('70%'),
-        justifyContent: "center",
-        margin:10,
-    },
-
-    footer:{
-        bottom: 0,
-        position: "absolute",
-        marginBottom: 10,
-        fontStyle: "normal",
-    },
-
-    logo: {
-        width: 150,
-        height: 150,
-        borderRadius: 150/2,
-        marginBottom: 5,
+    loginButton: {
+        marginTop: 10,
+        borderRadius: 4,
     },
 });
+
+export default LoginScreen;

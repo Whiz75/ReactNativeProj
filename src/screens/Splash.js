@@ -1,60 +1,48 @@
-import {StyleSheet, Text, Image, View} from 'react-native';
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
-import {Button} from "react-native-paper";
+import React, { useEffect } from 'react';
+import { View, StyleSheet, Image } from 'react-native';
+import {ActivityIndicator, Text} from 'react-native-paper';
 
-const Splash = ({navigation}) => {
+const SplashScreen = ({ navigation }) => {
+    useEffect(() => {
+        // Simulate some loading process (e.g., fetching data, authentication check)
+        const fakeLoadingProcess = setTimeout(() => {
+            // Navigate to the next screen (replace 'HomeScreen' with your actual screen)
+            navigation.replace('Login');
+        }, 3000); // Adjust the duration as needed
+
+        // Clear the timeout if the component is unmounted
+        return () => clearTimeout(fakeLoadingProcess);
+    }, [navigation]);
+
     return (
         <View style={styles.container}>
-            <View style={styles.content}>
-                <Image
-                    style={styles.logo}
-                    source={require("../assets/logo.png")}/>
+            <Image
+                source={require('../assets/logo.png')} // Replace with the path to your logo
+                style={styles.logo}/>
 
-                <Text
-                    className="text-white font-bold text-4xl text-center" style={styles.title}>
-                    Let's Get Started!
-                </Text>
-
-                <Button style={styles.btn} mode={"contained"} onPress={()=>{navigation.navigate('Login')}}>GET STARTED</Button>
-            </View>
-
-            <View style={styles.footer}>
-                <Text>VERSION 1.0.0</Text>
-            </View>
+            <Text style={styles.loadingText}>Loading...</Text>
+            <ActivityIndicator animating={true} color="#6200ea" size="large" />
         </View>
     );
 };
 
-export default Splash;
-
 const styles = StyleSheet.create({
     container: {
-            flex: 1,
-            alignItems: 'center',
-            justifyContent: 'center',
-    },
-
-    logo:{
-        width: 100,
-        height: 100,
-        borderRadius: 100/2,
-        marginBottom:10,
-    },
-
-    content:{
         flex: 1,
-        justifyContent: "center",
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#fff', // Adjust the background color as needed
+    },
+    logo: {
+        width: 200,
+        height: 200,
+        marginBottom: 16,
     },
 
-    btn:{
-        width: wp('80%'),
-        borderRadius: 2,
-    },
-
-    footer:{
-        bottom: 0,
-        position: "absolute",
-        marginBottom: 10,
-        fontStyle: "normal",
+    loadingText:{
+        margin: 20,
+        fontWeight: "bold",
     },
 });
+
+export default SplashScreen;
