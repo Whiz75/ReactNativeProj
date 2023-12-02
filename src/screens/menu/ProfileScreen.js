@@ -1,47 +1,43 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Avatar, Card, Title, Subheading, Divider, Button, Provider as PaperProvider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, ScrollView } from 'react-native';
+import {List, Divider, Provider as PaperProvider, TextInput} from 'react-native-paper';
 
 const ProfileScreen = () => {
+
     return (
         <PaperProvider>
             <ScrollView style={styles.container}>
-                <View style={styles.header}>
-                    <Avatar.Image size={100} source={{ uri: 'https://placekitten.com/100/100' }} />
-                    <Title style={styles.username}>John Doe</Title>
-                    <Subheading style={styles.email}>john.doe@example.com</Subheading>
-                </View>
+                <List.Section>
+                    <List.Subheader>Personal Information</List.Subheader>
+                    <TextInput
+                        label="Firstname"
+                        mode="outlined"
+                        style={styles.input}/>
 
-                <Card style={styles.card}>
-                    <Card.Content>
-                        <Title>About Me</Title>
-                        <Subheading>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ut efficitur justo. Nunc euismod erat in nunc
-                            egestas, vel cursus velit accumsan.
-                        </Subheading>
-                    </Card.Content>
-                </Card>
+                    <TextInput
+                        label="Lastname"
+                        mode="outlined"
+                        style={styles.input}/>
 
-                <Divider />
-
-                <Card style={styles.card}>
-                    <Card.Content>
-                        <Title>Interests</Title>
-                        <Subheading>Sports, Travel, Reading</Subheading>
-                    </Card.Content>
-                </Card>
+                    <TextInput
+                        label="Email address"
+                        mode="outlined"
+                        style={styles.input}/>
+                </List.Section>
 
                 <Divider />
 
-                <Button
-                    mode="contained"
-                    icon={() => <Icon name="pencil" size={20} color="white" />}
-                    style={styles.editButton}
-                    onPress={() => console.log('Edit profile pressed')}
-                >
-                    Edit Profile
-                </Button>
+                <List.Section>
+                    <List.Item
+                        title="Change Password"
+                        left={() => <List.Icon icon="lock" />}
+                        onPress={() => console.log('Change Password pressed')}/>
+
+                    <List.Item
+                        title="Logout"
+                        left={() => <List.Icon icon="logout" />}
+                        onPress={() => console.log('Logout pressed')}/>
+                </List.Section>
             </ScrollView>
         </PaperProvider>
     );
@@ -50,26 +46,90 @@ const ProfileScreen = () => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f4f4f4',
-        padding: 16,
+        backgroundColor: '#fff',
+        padding:16,
     },
-    header: {
+    backgroundImage: {
+        flex: 1,
+        resizeMode: 'cover',
+    },
+    logoContainer: {
         alignItems: 'center',
-        marginBottom: 16,
+        marginTop: 160,
     },
-    username: {
-        marginTop: 8,
-        marginBottom: 4,
+    logo: {
+        width: 120,
+        height: 120,
+        borderRadius:60,
     },
-    email: {
-        marginBottom: 16,
+    formContainer: {
+        marginHorizontal: 20,
+        marginTop: 50,
+        padding:20,
+        borderRadius:10,
+        backgroundColor:'rgba(255, 255, 255, 0.3)'
     },
     card: {
-        marginVertical: 8,
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 3.84,
+        elevation: 5,
+        marginBottom: 20,
+        padding:10,
     },
-    editButton: {
-        marginTop: 16,
-        backgroundColor: '#6200ea', // Adjust the color as needed
+    input: {
+        height: 40,
+        paddingHorizontal: 10,
+        borderBottomWidth:1,
+        borderBottomColor:'#B0C4DE'
+    },
+    loginButton: {
+        backgroundColor: '#32BB78',
+        padding: 10,
+        borderRadius: 10,
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    loginButtonText: {
+        color: '#fff',
+        fontSize: 16,
+    },
+
+    openButton: {
+        fontSize: 20,
+        color: 'blue',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'rgba(0,0,0,0.5)',
+    },
+    modalView: {
+        backgroundColor: 'white',
+        borderRadius: 10,
+        padding: 20,
+        alignItems: 'center',
+    },
+    modalText: {
+        fontSize: 18,
+        marginBottom: 20,
+    },
+    closeButton: {
+        marginTop: 10,
+        backgroundColor: 'blue',
+        padding: 10,
+        borderRadius: 5,
+    },
+    closeButtonText: {
+        color: 'white',
+        fontSize: 16,
     },
 });
 

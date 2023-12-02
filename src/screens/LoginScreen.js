@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
-import {View, StyleSheet, Image} from 'react-native';
+import {View, StyleSheet} from 'react-native';
 import { TextInput, Button, Title, Snackbar } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 const LoginScreen = ({navigation}) => {
     const [email, setEmail] = useState('');
@@ -109,6 +108,7 @@ const styles = StyleSheet.create({
     loginButton: {
         marginTop: 10,
         borderRadius: 4,
+        backgroundColor: '#32BB78',
     },
 });
 

@@ -1,34 +1,32 @@
 import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { List, Switch, Divider, Title, Provider as PaperProvider } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { StyleSheet, ScrollView } from 'react-native';
+import {List, Divider, Provider as PaperProvider, TextInput} from 'react-native-paper';
 
 const SettingsScreen = () => {
     return (
         <PaperProvider>
             <ScrollView style={styles.container}>
-                <Title style={styles.title}>Settings</Title>
-
                 <List.Section>
-                    <List.Subheader>General</List.Subheader>
-                    <List.Item
-                        title="Notifications"
-                        description="Receive notifications for updates"
-                        left={() => <List.Icon icon="bell" />}
-                        right={() => <Switch value={true} />}
-                    />
-                    <List.Item
-                        title="Dark Mode"
-                        description="Enable dark mode for the app"
-                        left={() => <List.Icon icon="theme-light-dark" />}
-                        right={() => <Switch value={false} />}
-                    />
+                    <List.Subheader>Personal Information</List.Subheader>
+                    <TextInput
+                        label="Firstname"
+                        mode="outlined"
+                        style={styles.input}/>
+
+                    <TextInput
+                        label="Lastname"
+                        mode="outlined"
+                        style={styles.input}/>
+
+                    <TextInput
+                        label="Email address"
+                        mode="outlined"
+                        style={styles.input}/>
                 </List.Section>
 
                 <Divider />
 
                 <List.Section>
-                    <List.Subheader>Account</List.Subheader>
                     <List.Item
                         title="Change Password"
                         left={() => <List.Icon icon="lock" />}
@@ -55,6 +53,12 @@ const styles = StyleSheet.create({
         fontSize: 24,
         marginBottom: 16,
         textAlign: 'center',
+    },
+    input:{
+        height: 40,
+        paddingHorizontal: 10,
+        borderBottomWidth:1,
+        borderBottomColor:'#B0C4DE'
     },
 });
 

@@ -1,42 +1,114 @@
-import React from 'react';
-import { View, StyleSheet, ScrollView } from 'react-native';
-import { Card, Title, Paragraph, Provider as PaperProvider, Button } from 'react-native-paper';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import React, {useCallback, useMemo, useRef, useState} from 'react';
+import {StyleSheet, ScrollView,SafeAreaView} from 'react-native';
+import {Button, Searchbar} from 'react-native-paper';
+import MapView, {Marker} from "react-native-maps";
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
 
 const HomeScreen = () => {
-    return (
-        <PaperProvider>
-            <ScrollView style={styles.container}>
-                <Card style={styles.card}>
-                    <Card.Cover source={{ uri: 'https://placekitten.com/600/300' }} />
-                    <Card.Content>
-                        <Title>Beautiful Cat</Title>
-                        <Paragraph>Cute cat enjoying the sun!</Paragraph>
-                    </Card.Content>
-                    <Card.Actions>
-                        <Button icon={() => <Icon name="heart" size={20} color="#6200ea" />} onPress={() => console.log('Pressed')}>
-                            Like
-                        </Button>
-                        <Button icon={() => <Icon name="comment" size={20} color="#6200ea" />} onPress={() => console.log('Pressed')}>
-                            Comment
-                        </Button>
-                    </Card.Actions>
-                </Card>
 
-                {/* Add more cards or components as needed */}
+    const [searchQuery, setSearchQuery] = React.useState('');
+    const onChangeSearch = query => setSearchQuery(query);
+
+    return (
+        <SafeAreaView>
+            <ScrollView style={styles.container}>
+                <Searchbar style={styles.card}
+                    mode={"bar"}
+                    icon=""
+                    placeholder={"Search"}
+                    onChangeText={onChangeSearch}
+                    value={searchQuery}/>
+
+                <MapView style={styles.mapStyle}
+                 initialRegion={{
+                     latitude: -26.1944390074494,
+                     longitude: 28.04794381182685,
+                     latitudeDelta: 0.0922,
+                     longitudeDelta: 0.0421,
+                 }}>
+
+                <Marker
+                    draggable
+                    coordinate={{
+                        latitude: -26.1944390074494,
+                        longitude: 28.04794381182685,
+                    }}
+                    onDragEnd={
+                        (e) => alert(JSON.stringify(e.nativeEvent.coordinate))
+                    }
+                    title={'Test Marker'}
+                    description={'This is a description of the marker'}/>
+                </MapView>
             </ScrollView>
-        </PaperProvider>
+
+            <Button
+                mode="contained"
+                style={styles.button}>
+                SELECT BOLT
+            </Button>
+        </SafeAreaView>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#f4f4f4',
-        padding: 16,
+        position: 'absolute',
+        flex:1,
+    },
+    mapStyle:{
+        height: hp('100%'),
+        width: wp('100%'),
     },
     card: {
         marginBottom: 16,
+    },
+    cardButton:{
+      backgroundColor: '#32BB78',
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginTop: 22,
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 5,
+        alignItems: 'center',
+        shadowColor: '#000',
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        height: hp('50%'),
+        width: wp('80%'),
+    },
+    button: {
+        borderRadius: 20,
+        padding:5,
+        elevation: 2,
+        backgroundColor: '#32BB78',
+        margin:10,
+    },
+    buttonOpen: {
+        backgroundColor: '#32BB78',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: 'center',
     },
 });
 

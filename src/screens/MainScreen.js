@@ -12,9 +12,7 @@ const Tab = createBottomTabNavigator();
 const Container = () => {
     return (
         <PaperProvider>
-            <Tab.Navigator
-                initialRouteName="Home"
-            >
+            <Tab.Navigator initialRouteName="Home">
                 <Tab.Screen
                     name="Home"
                     component={HomeScreen}
@@ -25,6 +23,7 @@ const Container = () => {
                         ),
                     }}
                 />
+
                 <Tab.Screen
                     name="Profile"
                     component={ProfileScreen}
@@ -35,6 +34,7 @@ const Container = () => {
                         ),
                     }}
                 />
+
                 <Tab.Screen
                     name="Settings"
                     component={SettingsScreen}

@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { View, StyleSheet, Image } from 'react-native';
-import {ActivityIndicator, Text} from 'react-native-paper';
+import LottieView from 'lottie-react-native';
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from "react-native-responsive-screen";
 
 const SplashScreen = ({ navigation }) => {
     useEffect(() => {
@@ -16,12 +17,13 @@ const SplashScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Image
+            {/*<Image
                 source={require('../assets/logo.png')} // Replace with the path to your logo
-                style={styles.logo}/>
+                style={styles.logo}/>*/}
 
-            <Text style={styles.loadingText}>Loading...</Text>
-            <ActivityIndicator animating={true} color="#6200ea" size="large" />
+            <LottieView
+                style={styles.logo}
+                source={require('../assets/loading_anim.json')} autoPlay loop />
         </View>
     );
 };
@@ -34,14 +36,9 @@ const styles = StyleSheet.create({
         backgroundColor: '#fff', // Adjust the background color as needed
     },
     logo: {
-        width: 200,
-        height: 200,
+        width: wp('100%'),
+        height: hp('50%'),
         marginBottom: 16,
-    },
-
-    loadingText:{
-        margin: 20,
-        fontWeight: "bold",
     },
 });
 
