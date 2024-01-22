@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { TextInput, Button, Title } from 'react-native-paper';
+import {TextInput, Button, Title, Text} from 'react-native-paper';
+/*import BottomSheet from 'react-native-simple-bottom-sheet';
+import {useRef} from "@types/react";*/
 
 const SignUpScreen = ({navigation}) => {
     const [firstname, setFirstname] = useState('');
@@ -22,6 +24,8 @@ const SignUpScreen = ({navigation}) => {
     const handleBackToLogin =()=>{
         navigation.navigate('Login');
     }
+
+    //const panelRef = useRef(null);
 
     return (
         <View style={styles.container}>

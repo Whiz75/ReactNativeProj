@@ -1,114 +1,141 @@
-import React, {useCallback, useMemo, useRef, useState} from 'react';
-import {StyleSheet, ScrollView,SafeAreaView} from 'react-native';
-import {Button, Searchbar} from 'react-native-paper';
-import MapView, {Marker} from "react-native-maps";
-import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen'
+import React, {useState, useRef, useEffect} from 'react';
+import {View, StyleSheet} from 'react-native';
+import MapView, { Marker } from 'react-native-maps';
+import BottomSheet from 'react-native-simple-bottom-sheet';
+import {Divider, List, Searchbar,FAB} from "react-native-paper";
+import * as Location  from 'expo-location'
 
 const HomeScreen = () => {
+    const [searchText, setSearchText] = useState('');
+    const bottomSheetRef = useRef();
 
-    const [searchQuery, setSearchQuery] = React.useState('');
-    const onChangeSearch = query => setSearchQuery(query);
+    const [currentLocation, setCurrentLocation] = useState(null);
+    const [userAddress, setUserAddress] = useState('');
+    const [initialRegion, setInitialRegion] = useState(null);
+
+    useEffect(() => {
+        const getLocation = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== "granted") {
+                console.log("Permission to access location was denied");
+                return;
+            }
+
+            let location = await Location.getCurrentPositionAsync({});
+            setCurrentLocation(location.coords);
+
+            setInitialRegion({
+                latitude: location.coords.latitude,
+                longitude: location.coords.longitude,
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.005,
+            });
+
+        };
+        getLocation();
+    }, []);
+
+    // create the handler method
+    const GetCurrentLocation = async () => {
+
+        let { coords } = await Location.getCurrentPositionAsync();
+
+        if (coords) {
+            const { latitude, longitude } = coords;
+            let response = await Location.reverseGeocodeAsync({latitude, longitude});
+
+            for (let item of response) {
+                let address = `${item.name}, ${item.street}, ${item.postalCode}, ${item.city}`;
+                setUserAddress({address});
+            }
+        }
+        await GetCurrentLocation();
+    };
+
 
     return (
-        <SafeAreaView>
-            <ScrollView style={styles.container}>
-                <Searchbar style={styles.card}
-                    mode={"bar"}
-                    icon=""
-                    placeholder={"Search"}
-                    onChangeText={onChangeSearch}
-                    value={searchQuery}/>
+        <View style={styles.container}>
+            {initialRegion && (
+                <MapView style={styles.map} initialRegion={initialRegion}>
+                    {currentLocation && (
+                        <Marker
+                            coordinate={{
+                                latitude: currentLocation.latitude, longitude: currentLocation.longitude,}}
+                            title="Your Location"
+                            draggable={true}/>)}
+                </MapView>)}
 
-                <MapView style={styles.mapStyle}
-                 initialRegion={{
-                     latitude: -26.1944390074494,
-                     longitude: 28.04794381182685,
-                     latitudeDelta: 0.0922,
-                     longitudeDelta: 0.0421,
-                 }}>
+            <FAB
+                icon="menu"
+                animated={true}
+                style={styles.fab}/>
 
-                <Marker
-                    draggable
-                    coordinate={{
-                        latitude: -26.1944390074494,
-                        longitude: 28.04794381182685,
-                    }}
-                    onDragEnd={
-                        (e) => alert(JSON.stringify(e.nativeEvent.coordinate))
-                    }
-                    title={'Test Marker'}
-                    description={'This is a description of the marker'}/>
-                </MapView>
-            </ScrollView>
+            <BottomSheet ref={bottomSheetRef} isOpen={true}>
+                <View>
+                    <Searchbar style={styles.searchBar}
+                       mode={"bar"}
+                       icon=""
+                       placeholder={"Where to?"}
+                       loading={true}/>
+                </View>
 
-            <Button
-                mode="contained"
-                style={styles.button}>
-                SELECT BOLT
-            </Button>
-        </SafeAreaView>
+                <List.Section>
+                    <List.Item title="Diepkloof, zone 1" left={() => <List.Icon icon="history" />} />
+                    <Divider/>
+                    <List.Item title="Diepkloof, zone 3" left={() => <List.Icon icon="history" />} />
+                </List.Section>
+            </BottomSheet>
+        </View>
     );
 };
 
 const styles = StyleSheet.create({
     container: {
-        position: 'absolute',
-        flex:1,
-    },
-    mapStyle:{
-        height: hp('100%'),
-        width: wp('100%'),
-    },
-    card: {
-        marginBottom: 16,
-    },
-    cardButton:{
-      backgroundColor: '#32BB78',
-    },
-    centeredView: {
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        marginTop: 22,
+        alignItems: 'stretch',
     },
-    modalView: {
-        margin: 20,
+    map: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    searchContainer: {
+        position: 'absolute',
+        top: 20,
+        left: 20,
+        right: 20,
+    },
+    searchInput: {
+        height: 40,
+        borderColor: 'gray',
+        borderWidth: 1,
+        borderRadius: 5,
+        paddingLeft: 10,
         backgroundColor: 'white',
-        borderRadius: 20,
-        padding: 5,
-        alignItems: 'center',
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-        height: hp('50%'),
-        width: wp('80%'),
+    },
+    searchBar: {
+        margin: 5,
+        backgroundColor:'lightgray',
+        shadowOpacity:2,
+        shadowColor:'grav',
+        elevation:2,
+        borderRadius:5,
+        fontStyle: "bold",
     },
     button: {
-        borderRadius: 20,
+        borderRadius: 5,
         padding:5,
         elevation: 2,
         backgroundColor: '#32BB78',
-        margin:10,
+        margin:5,
     },
-    buttonOpen: {
-        backgroundColor: '#32BB78',
+    fab:{
+        position: 'absolute',
+        backgroundColor: 'white',
+        margin: 16,
+        left: 0,
+        top: 0,
     },
-    buttonClose: {
-        backgroundColor: '#2196F3',
-    },
-    textStyle: {
-        color: 'white',
-        fontWeight: 'bold',
-        textAlign: 'center',
-    },
-    modalText: {
-        marginBottom: 15,
-        textAlign: 'center',
+    title:{
+        fontStyle: "bold",
     },
 });
 
