@@ -53,5 +53,18 @@
   <string>UIStatusBarStyleDefault</string>
   <key>CADisableMinimumFrameDurationOnPhone</key>
   <true/>
+
+  <key>NSAppTransportSecurity</key>
+  <dict>
+    <key>NSAllowsArbitraryLoads</key>
+    <true/>
+  </dict>
+  <key>GoogleMapsApiKey</key>
+  <string>AIzaSyCig7wjJ1Xgo1Z7_6FrlsQxp9yor0tte4s</string>
+
+    <key>NSLocationWhenInUseUsageDescription</key>
+    <string>We need your location for...</string>
+    <key>NSLocationAlwaysUsageDescription</key>
+    <string>We need your location for...</string>
 </dict>
 </plist>
