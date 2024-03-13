@@ -2,7 +2,7 @@ import React, {useState, useRef, useEffect} from 'react';
 import {View, StyleSheet} from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import BottomSheet from 'react-native-simple-bottom-sheet';
-import {Divider, List, Searchbar,FAB} from "react-native-paper";
+import {Divider, List, Searchbar,FAB,Portal, Dialog, Text,Button} from "react-native-paper";
 import * as Location  from 'expo-location'
 
 const HomeScreen = () => {
@@ -12,6 +12,11 @@ const HomeScreen = () => {
     const [currentLocation, setCurrentLocation] = useState(null);
     const [userAddress, setUserAddress] = useState('');
     const [initialRegion, setInitialRegion] = useState(null);
+
+    /*Dialog properties */
+    const [visible, setVisible] = React.useState(false);
+    const showDialog = () => setVisible(true);
+    const hideDialog = () => setVisible(false);
 
     useEffect(() => {
         const getLocation = async () => {
@@ -68,7 +73,20 @@ const HomeScreen = () => {
             <FAB
                 icon="menu"
                 animated={true}
-                style={styles.fab}/>
+                style={styles.fab}
+                onPress={showDialog}/>
+
+            <Portal>
+            <Dialog visible={visible} onDismiss={hideDialog} theme={{ colors: { primary: 'green' } }}>
+                <Dialog.Title>Alert</Dialog.Title>
+                <Dialog.Content>
+                <Text variant="bodyMedium">This is simple dialog</Text>
+                </Dialog.Content>
+                <Dialog.Actions>
+                <Button onPress={hideDialog}>Done</Button>
+                </Dialog.Actions>
+            </Dialog>
+            </Portal>
 
             <BottomSheet ref={bottomSheetRef} isOpen={true}>
                 <View>
@@ -76,7 +94,7 @@ const HomeScreen = () => {
                        mode={"bar"}
                        icon=""
                        placeholder={"Where to?"}
-                       loading={true}/>
+                       loading={false}/>
                 </View>
 
                 <List.Section>
