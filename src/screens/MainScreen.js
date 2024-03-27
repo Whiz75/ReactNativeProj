@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeScreen from './menu/HomeScreen';
 import ProfileScreen from './menu/ProfileScreen';
 import SettingsScreen from './menu/SettingsScreen';
+import HistoryScreen from './menu/HistoryScreen';
 
 const Tab = createBottomTabNavigator();
 
@@ -43,6 +44,15 @@ const Container = () => {
                         tabBarIcon: ({ color, size }) => (
                             <Icon name="cog" color={color} size={size} />
                         ),
+                    }}
+                />
+                
+                <Tab.Screen
+                    name='History'
+                    component={HistoryScreen}
+                    options={{
+                        tabBarLabel:'history',
+                        tabBarIcon: ({ color, size }) => (<Icon name="history" color={color} size={size} />),
                     }}
                 />
             </Tab.Navigator>

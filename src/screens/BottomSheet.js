@@ -7,8 +7,8 @@ import {Dialog, Portal} from "react-native-paper";
 const BottomSheet = () => {
 
     const [visible, setVisible] = React.useState(false);
-
     const hideDialog = () => setVisible(false);
+    const showDialog = () => setVisible(true);
 
     return (
         // Render modal for the bottom sheet

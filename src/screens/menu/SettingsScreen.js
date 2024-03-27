@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import {List, Divider, Provider as PaperProvider, TextInput} from 'react-native-paper';
 
-const SettingsScreen = () => {
+function SettingsScreen() {
     return (
         <PaperProvider>
             <ScrollView style={styles.container}>
@@ -11,17 +11,17 @@ const SettingsScreen = () => {
                     <TextInput
                         label="Firstname"
                         mode="outlined"
-                        style={styles.input}/>
+                        style={styles.input} />
 
                     <TextInput
                         label="Lastname"
                         mode="outlined"
-                        style={styles.input}/>
+                        style={styles.input} />
 
                     <TextInput
                         label="Email address"
                         mode="outlined"
-                        style={styles.input}/>
+                        style={styles.input} />
                 </List.Section>
 
                 <Divider />
@@ -30,18 +30,16 @@ const SettingsScreen = () => {
                     <List.Item
                         title="Change Password"
                         left={() => <List.Icon icon="lock" />}
-                        onPress={() => console.log('Change Password pressed')}
-                    />
+                        onPress={() => console.log('Change Password pressed')} />
                     <List.Item
                         title="Logout"
                         left={() => <List.Icon icon="logout" />}
-                        onPress={() => console.log('Logout pressed')}
-                    />
+                        onPress={() => console.log('Logout pressed')} />
                 </List.Section>
             </ScrollView>
         </PaperProvider>
     );
-};
+}
 
 const styles = StyleSheet.create({
     container: {

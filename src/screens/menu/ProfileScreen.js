@@ -1,136 +1,69 @@
 import React from 'react';
 import { StyleSheet, ScrollView } from 'react-native';
 import {List, Divider, Provider as PaperProvider, TextInput} from 'react-native-paper';
+import { View, Text, Image } from 'react-native';
+import { Avatar } from '@rneui/themed';
+
+// Function to extract initials from the name
+const getInitials = (name) => {
+    return name
+    .split(' ')
+    .map((word) => word.charAt(0).toUpperCase())
+    .join('');
+};
 
 const ProfileScreen = () => {
 
     return (
-        <PaperProvider>
-            <ScrollView style={styles.container}>
-                <List.Section>
-                    <List.Subheader>Personal Information</List.Subheader>
-                    <TextInput
-                        label="Firstname"
-                        mode="outlined"
-                        style={styles.input}/>
+      <View style={styles.container}>
+        <Avatar source={{ uri: "https://randomuser.me/api/portraits/men/36.jpg" }} 
+          style={styles.profileImage} />
 
-                    <TextInput
-                        label="Lastname"
-                        mode="outlined"
-                        style={styles.input}/>
+        <Text style={styles.username}>John Doe</Text>
 
-                    <TextInput
-                        label="Email address"
-                        mode="outlined"
-                        style={styles.input}/>
-                </List.Section>
+        <Text style={styles.bio}>Software Engineer</Text>
 
-                <Divider />
-
-                <List.Section>
-                    <List.Item
-                        title="Change Password"
-                        left={() => <List.Icon icon="lock" />}
-                        onPress={() => console.log('Change Password pressed')}/>
-
-                    <List.Item
-                        title="Logout"
-                        left={() => <List.Icon icon="logout" />}
-                        onPress={() => console.log('Logout pressed')}/>
-                </List.Section>
-            </ScrollView>
-        </PaperProvider>
+        <View style={styles.statsContainer}>
+          <Text style={styles.seperator}>Followers: 1.2K</Text>
+          <Text style={styles.seperator}>|</Text>
+          <Text style={styles.seperator}>Following: 345</Text>
+          <Text style={styles.seperator}>|</Text>
+          <Text style={styles.seperator}>Posts: 256</Text>
+        </View>
+      </View>
     );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#fff',
-        padding:16,
-    },
-    backgroundImage: {
-        flex: 1,
-        resizeMode: 'cover',
-    },
-    logoContainer: {
-        alignItems: 'center',
-        marginTop: 160,
-    },
-    logo: {
-        width: 120,
-        height: 120,
-        borderRadius:60,
-    },
-    formContainer: {
-        marginHorizontal: 20,
-        marginTop: 50,
-        padding:20,
-        borderRadius:10,
-        backgroundColor:'rgba(255, 255, 255, 0.3)'
-    },
-    card: {
-        backgroundColor: '#fff',
-        borderRadius: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-            width: 0,
-            height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 3.84,
-        elevation: 5,
-        marginBottom: 20,
-        padding:10,
-    },
-    input: {
-        height: 40,
-        paddingHorizontal: 10,
-        borderBottomWidth:1,
-        borderBottomColor:'#B0C4DE'
-    },
-    loginButton: {
-        backgroundColor: '#32BB78',
-        padding: 10,
-        borderRadius: 10,
-        alignItems: 'center',
-        marginTop: 20,
-    },
-    loginButtonText: {
-        color: '#fff',
-        fontSize: 16,
-    },
-
-    openButton: {
-        fontSize: 20,
-        color: 'blue',
-    },
-    centeredView: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-    modalView: {
-        backgroundColor: 'white',
-        borderRadius: 10,
-        padding: 20,
-        alignItems: 'center',
-    },
-    modalText: {
-        fontSize: 18,
-        marginBottom: 20,
-    },
-    closeButton: {
-        marginTop: 10,
-        backgroundColor: 'blue',
-        padding: 10,
-        borderRadius: 5,
-    },
-    closeButtonText: {
-        color: 'white',
-        fontSize: 16,
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  profileImage: {
+    width: 120,
+    height: 120,
+    borderRadius: 60,
+    marginBottom: 20,
+  },
+  username: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: '#000',
+  },
+  bio: {
+    fontSize: 16,
+    color: '#cccccc',
+    marginBottom: 20,
+  },
+  statsContainer: {
+    flexDirection: 'row',
+  },
+  seperator: {
+    marginRight: 5,
+    color: '#cccccc',
+  },
 });
 
 export default ProfileScreen;
